@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', function () {
-    return view('posts', ['title' => 'Blog Pages', 'posts' => Post::filter(request(['search', 'kategori', 'author']))->latest()->get()]);
+    return view('posts', ['title' => 'Blog Pages', 'posts' => Post::filter(request(['search', 'kategori', 'author']))->latest()->paginate(5)->withQueryString()]);
 });
 
 // Rute untuk mendapatkan param dari post *wildcard{id}; gunakan slug untuk keamanan database

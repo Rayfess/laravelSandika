@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Model::preventLazyLoading();  untuk menjalankan method sedangkan (+s menghasilkan boolean) 
+        Model::preventLazyLoading();  // untuk menjalankan method sedangkan (+s menghasilkan boolean)
     }
 }
