@@ -7,10 +7,6 @@ use App\Models\Kategori;
 use Illuminate\Support\Arr;
 // Fungsi Utama dari route
 use Illuminate\Support\Facades\Route;
-/*
-*/
-
-use function Laravel\Prompts\search;
 
 // Membuat rute untuk menambahkan view beserta data yang ada
 Route::get('/', function () {
@@ -18,7 +14,13 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', function () {
-    return view('posts', ['title' => 'Blog Pages', 'posts' => Post::filter(request(['search', 'kategori', 'author']))->latest()->paginate(5)->withQueryString()]);
+    return view('posts', [
+        'title' => 'Blog Pages',
+        'posts' => Post::filter(request(['search', 'kategori', 'author']))
+            ->latest()
+            ->paginate(5)
+            ->withQueryString(),
+    ]);
 });
 
 // Rute untuk mendapatkan param dari post *wildcard{id}; gunakan slug untuk keamanan database
@@ -27,8 +29,10 @@ Route::get('/posts/{post:slug}', function (Post $post) {
 });
 
 Route::get('/authors/{user:username}', function (User $user) {
-    // LazyEagerLoading dilakukan ketika parent sudah dipanggil, load()
-    // $posts = $user->posts->load('kategori', 'author');
+    /*
+     LazyEagerLoading dilakukan ketika parent sudah dipanggil, load()
+     $posts = $user->posts->load('kategori', 'author');
+    */
     return view('posts', ['title' => count($user->posts) . ' Articles By ' . $user->name, 'posts' => $user->posts]);
 });
 
